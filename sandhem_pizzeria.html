@@ -1,0 +1,1532 @@
+<!DOCTYPE html>
+<html lang="sv" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sandhem Pizzeria — familjär pizzeria i Sandhem. 51 pizzor, sallader, à la carte och catering. Beställ på 0515-76 00 04.">
+    <meta name="theme-color" content="#FF1744">
+    <title>Sandhem Pizzeria — Pizza, Sallader & Catering | 0515-76 00 04</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Ctext%20y='.9em'%20font-size='90'%3E%F0%9F%8D%95%3C/text%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;500;600;700;800;900&family=Noto+Sans+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --red:      #FF1744;
+            --red-dark: #D50000;
+            --dark:     #1A1A1A;
+            --card-bg:  #FFF5F5;
+            --text:     #1A1A1A;
+            --muted:    #4B5563;
+            --white:    #FFFFFF;
+            --border:   #F0E0E0;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text);
+            background: var(--white);
+            overflow-x: hidden;
+        }
+
+        [dir="rtl"] { font-family: 'Noto Sans Arabic', 'Poppins', sans-serif; }
+
+        /* Skip link for keyboard users */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 8px;
+            background: var(--dark);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            z-index: 2000;
+            transition: top 0.2s;
+        }
+        .skip-link:focus { top: 8px; }
+
+        /* Focus rings for keyboard users (not on mouse click) */
+        :focus { outline: none; }
+        :focus-visible {
+            outline: 3px solid var(--red);
+            outline-offset: 2px;
+            border-radius: 6px;
+        }
+        .lang-pill:focus-visible,
+        .cat-tab:focus-visible,
+        .card-order-btn:focus-visible,
+        .phone-btn:focus-visible,
+        .hero-cta:focus-visible {
+            outline-offset: 3px;
+        }
+
+        /* Respect reduced-motion preference */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+            .ingredient { animation: none; }
+        }
+
+        /* ========================
+           NAVIGATION
+        ======================== */
+
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            background: white;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-inner {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 10px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        /* Logo badge — image-based */
+        .logo-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 76px;
+            height: 76px;
+            text-decoration: none;
+            flex-shrink: 0;
+            cursor: pointer;
+        }
+
+        .logo-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text);
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover { color: var(--red); }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Language pills */
+        /* Language pills — kept for mobile menu only */
+        .lang-pills { display: flex; gap: 4px; }
+
+        .lang-pill {
+            border: none;
+            background: #F3F4F6;
+            color: var(--text);
+            min-height: 36px;
+            padding: 8px 14px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .lang-pill.active {
+            background: var(--red);
+            color: white;
+        }
+
+        .lang-pill:hover:not(.active) { background: #E5E7EB; }
+
+        /* Language dropdown (desktop nav) */
+        .lang-select {
+            appearance: none;
+            -webkit-appearance: none;
+            background: #F3F4F6 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='%234B5563' d='M0 0l5 6 5-6z'/%3E%3C/svg%3E") no-repeat right 14px center;
+            border: none;
+            border-radius: 999px;
+            padding: 12px 36px 12px 18px;
+            font-size: 13px;
+            font-weight: 600;
+            font-family: inherit;
+            color: var(--text);
+            cursor: pointer;
+            min-height: 44px;
+            transition: background 0.2s;
+        }
+
+        .lang-select:hover { background-color: #E5E7EB; }
+        .lang-select:focus-visible { outline: 3px solid var(--red); outline-offset: 2px; }
+
+        /* Phone CTA */
+        .phone-btn {
+            background: var(--red);
+            color: white;
+            min-height: 44px;
+            padding: 12px 22px;
+            border-radius: 999px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            white-space: nowrap;
+            transition: background 0.2s;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .phone-btn:hover { background: var(--red-dark); }
+
+        /* Mobile toggle */
+        .nav-mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 26px;
+            cursor: pointer;
+            color: var(--text);
+            line-height: 1;
+        }
+
+        /* Mobile dropdown */
+        #mobile-menu {
+            display: none;
+            position: fixed;
+            top: 88px;
+            left: 0; right: 0;
+            background: white;
+            z-index: 999;
+            padding: 20px 24px 24px;
+            border-bottom: 1px solid var(--border);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+        }
+        #mobile-menu.open { display: block; }
+
+        #mobile-menu ul {
+            list-style: none;
+            margin-bottom: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        #mobile-menu a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 600;
+            font-size: 16px;
+            display: inline-block;
+            min-height: 44px;
+            line-height: 44px;
+        }
+
+        .mobile-lang-row { display: flex; gap: 8px; }
+
+        /* ========================
+           HERO
+        ======================== */
+
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(160deg, #FFFAF5 0%, #FFFFFF 60%);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding-top: clamp(110px, 14vh, 160px);
+            padding-left: 24px;
+            padding-right: 24px;
+            /* Reserve room for the half-visible pizza so it never overlaps the CTA */
+            padding-bottom: clamp(200px, 42vw, 420px);
+            text-align: center;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            max-width: 680px;
+            margin-top: clamp(8px, 2vh, 40px);
+        }
+
+        .hero h1 {
+            font-size: clamp(2.2rem, 6.2vw, 4.2rem);
+            font-weight: 900;
+            line-height: 1.08;
+            color: var(--dark);
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 1.8vw, 1.15rem);
+            color: var(--muted);
+            margin: 0 auto 36px;
+            line-height: 1.65;
+            max-width: 520px;
+            text-wrap: balance;
+        }
+
+        .hero-cta {
+            display: inline-block;
+            background: var(--red);
+            color: white;
+            padding: 16px 42px;
+            border-radius: 999px;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 700;
+            transition: all 0.25s;
+            box-shadow: 0 4px 20px rgba(255,23,68,0.3);
+        }
+
+        .hero-cta:hover {
+            background: var(--red-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 28px rgba(255,23,68,0.4);
+        }
+
+        /* Floating ingredients (real photo assets) */
+        .ingredient {
+            position: absolute;
+            pointer-events: none;
+            user-select: none;
+            object-fit: contain;
+            filter: drop-shadow(0 8px 18px rgba(0,0,0,0.12));
+            animation: floatIng 7s ease-in-out infinite;
+            -webkit-user-drag: none;
+        }
+
+        @keyframes floatIng {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33%       { transform: translateY(-12px) rotate(4deg); }
+            66%       { transform: translateY(6px) rotate(-3deg); }
+        }
+
+        /* Ingredients spread top-to-bottom; lower ones peek alongside / behind the pizza
+           (pizza has z-index:5, ingredients default z-0, so pizza visually overlaps any
+           ingredient that lands in the middle — creating a "surrounding the pizza" feel) */
+        .ing-1  { top: 5%;  left: 3%;   width: 150px; animation-delay: 0s;    }  /* mushroom card — top-left  */
+        .ing-2  { top: 22%; right: 14%; width: 70px;  animation-delay: 0.9s;  }  /* small olive  — upper-R     */
+        .ing-3  { top: 3%;  right: 3%;  width: 160px; animation-delay: 1.3s;  }  /* basil card  — top-right    */
+        .ing-4  { top: 24%; left: 12%;  width: 95px;  animation-delay: 0.4s;  }  /* cherry tomato — upper-L    */
+        .ing-5  { top: 52%; left: 2%;   width: 140px; animation-delay: 1.9s;  }  /* basil leaf — beside pizza L*/
+        .ing-6  { top: 50%; right: 3%;  width: 130px; animation-delay: 0.7s;  }  /* big tomato — beside pizza R*/
+        .ing-7  { top: 68%; left: 10%;  width: 100px; animation-delay: 2.2s;  }  /* jalapeño — peeks at pizza L*/
+        .ing-8  { top: 66%; right: 11%; width: 88px;  animation-delay: 1.5s;  }  /* garlic — peeks at pizza R  */
+        .ing-9  { top: 35%; right: 22%; width: 115px; animation-delay: 1.1s;  }  /* mushroom var — mid-R       */
+        .ing-10 { top: 38%; left: 22%;  width: 80px;  animation-delay: 2.6s;  }  /* olive var — mid-L          */
+
+        /* Hero pizza — pops up from the bottom, EXACTLY half visible */
+        .hero-pizza-wrap {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: min(780px, 86vw);
+            transform: translate(-50%, 50%);   /* 50% = exact half cut */
+            z-index: 5;
+            pointer-events: none;
+            filter: drop-shadow(0 30px 60px rgba(0,0,0,0.22));
+        }
+
+        .hero-pizza {
+            width: 100%;
+            display: block;
+            border-radius: 50%;
+            clip-path: circle(48% at 50% 50%);
+            transform: rotate(0deg);
+            transition: transform 80ms linear;
+            will-change: transform;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .hero-pizza { transition: none; }
+        }
+
+        /* Speech bubble below the hero CTA button */
+        .hero-wine-bubble {
+            position: relative;
+            display: block;
+            width: fit-content;
+            margin: 22px auto 0;
+            background: #FFF6E5;
+            border: 2px solid #E8C97A;
+            border-radius: 20px;
+            padding: 10px 18px;
+            font-family: inherit;
+            font-weight: 800;
+            font-size: 14px;
+            color: #7A4A12;
+            white-space: nowrap;
+            pointer-events: none;
+            user-select: none;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+            animation: floatIng 6.5s ease-in-out infinite;
+            animation-delay: 0.8s;
+        }
+
+        /* Tail points upward toward the CTA button */
+        .hero-wine-bubble::before {
+            content: '';
+            position: absolute;
+            top: -12px;
+            left: 22px;
+            border: 10px solid transparent;
+            border-bottom-color: #E8C97A;
+            border-top: 0;
+        }
+
+        .hero-wine-bubble::after {
+            content: '';
+            position: absolute;
+            top: -9px;
+            left: 23px;
+            border: 9px solid transparent;
+            border-bottom-color: #FFF6E5;
+            border-top: 0;
+        }
+
+        /* ========================
+           MENU SECTION
+        ======================== */
+
+        #menu {
+            padding: 80px 24px 100px;
+            background: #FAFAFA;
+        }
+
+        .section-inner {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 4.5vw, 3rem);
+            font-weight: 800;
+            margin-bottom: 6px;
+            letter-spacing: -0.5px;
+            text-align: center;
+        }
+
+        .section-subtitle {
+            color: var(--muted);
+            font-size: 15px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        /* Category tab bar */
+        .category-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 16px;
+            position: sticky;
+            top: 88px;
+            z-index: 100;
+            background: #FAFAFA;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .cat-tab {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            min-height: 44px;
+            padding: 10px 22px;
+            border-radius: 999px;
+            border: none;
+            background: #F3F4F6;
+            color: var(--text);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .cat-tab.active {
+            background: var(--red);
+            color: white;
+        }
+
+        .cat-tab:hover:not(.active) { background: #E5E7EB; }
+
+        .cat-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--red);
+            flex-shrink: 0;
+        }
+
+        .cat-tab.active .cat-dot { background: rgba(255,255,255,0.6); }
+
+        /* Info strip — compact chips between tabs and menu grid */
+        .menu-info-strip {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 28px;
+        }
+
+        .info-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 7px 16px;
+            border-radius: 999px;
+            border: 1.5px solid var(--border);
+            background: white;
+            color: var(--text);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.15s, border-color 0.15s;
+            font-family: inherit;
+        }
+
+        .info-chip--allergy {
+            border-color: var(--red);
+            color: var(--red);
+        }
+
+        .info-chip--allergy.open,
+        .info-chip--allergy:hover { background: #FFE4E8; }
+
+        .info-chip--family.open,
+        .info-chip--extras.open,
+        .info-chip--family:hover,
+        .info-chip--extras:hover {
+            background: var(--card-bg);
+            border-color: #d0b0b0;
+        }
+
+        .info-panel {
+            width: 100%;
+            padding: 10px 18px;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .info-panel .tags-wrap { justify-content: center; }
+
+        .info-panel[hidden] { display: none; }
+
+        /* Speech bubble for wine & beer notice */
+        .wine-bubble {
+            position: relative;
+            display: inline-block;
+            background: #FFF6E5;
+            border: 1.5px solid #E8C97A;
+            border-radius: 16px;
+            padding: 8px 18px;
+            font-weight: 700;
+            font-size: 14px;
+            color: #7A4A12;
+            margin-bottom: 16px;
+        }
+
+        .wine-bubble::before {
+            content: '';
+            position: absolute;
+            bottom: -11px;
+            left: 19px;
+            border: 9px solid transparent;
+            border-top-color: #E8C97A;
+            border-bottom: 0;
+        }
+
+        .wine-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -9px;
+            left: 20px;
+            border: 8px solid transparent;
+            border-top-color: #FFF6E5;
+            border-bottom: 0;
+        }
+
+        /* Grid */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
+        }
+
+        /* Card */
+        .menu-card {
+            background: var(--card-bg);
+            border-radius: 24px;
+            padding: 26px;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .menu-card.hidden { display: none; }
+
+        .menu-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 14px 36px rgba(0,0,0,0.09);
+        }
+
+        .card-img-wrap {
+            width: 100%;
+            aspect-ratio: 1;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-bottom: 16px;
+            background: #EEE;
+        }
+
+        .card-img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .menu-card:hover .card-img-wrap img { transform: scale(1.05); }
+
+        .card-num {
+            display: inline-block;
+            align-self: flex-start;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--red);
+            background: #FFE4E8;
+            padding: 2px 12px;
+            border-radius: 999px;
+            margin-bottom: 8px;
+        }
+
+        .card-name {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            line-height: 1.2;
+        }
+
+        .card-ingredients {
+            font-size: 16px;
+            color: var(--muted);
+            line-height: 1.55;
+            flex: 1;
+            margin-bottom: 22px;
+        }
+
+        .card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 8px;
+            margin-top: auto;
+        }
+
+        .card-order-btn {
+            background: var(--red);
+            color: white;
+            min-height: 48px;
+            padding: 14px 28px;
+            border-radius: 999px;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.2s;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .card-order-btn:hover { background: var(--red-dark); transform: scale(1.03); }
+
+        .card-price {
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--dark);
+        }
+
+        .footer-tel {
+            color: white;
+            font-weight: 700;
+        }
+
+        .tags-wrap {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tag {
+            background: var(--card-bg);
+            border-radius: 6px;
+            padding: 6px 12px;
+            font-size: 14px;
+        }
+
+        /* Highlighted callout tag (e.g. allergy notice) */
+        .tag.tag-bold {
+            background: #FFE4E8;
+            border: 1.5px solid var(--red);
+            color: var(--red);
+            font-weight: 800;
+            padding: 6px 12px;
+            font-size: 14px;
+        }
+
+        /* ========================
+           FOOTER
+        ======================== */
+
+        /* Slightly darker red for footer to meet WCAG AA contrast for body text */
+        footer {
+            background: #C8102E;
+            color: white;
+            padding: 64px 24px 0;
+        }
+
+        .footer-inner { max-width: 1280px; margin: 0 auto; }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 48px;
+            padding-bottom: 56px;
+        }
+
+        .footer-logo {
+            display: block;
+            width: 110px;
+            margin-bottom: 18px;
+            background: white;
+            border-radius: 10px;
+            padding: 8px;
+        }
+
+        .footer-address {
+            font-size: 14px;
+            line-height: 1.8;
+            opacity: 0.88;
+            margin-bottom: 14px;
+        }
+
+        .footer-hours {
+            font-size: 13px;
+            line-height: 2;
+            opacity: 0.85;
+        }
+
+        .footer-hours strong { font-weight: 700; }
+
+        .footer-catering {
+            margin-top: 16px;
+            font-size: 15px;
+            font-weight: 700;
+            font-style: italic;
+            opacity: 0.95;
+        }
+
+        .footer-col h4 {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            opacity: 0.7;
+            margin-bottom: 22px;
+        }
+
+        .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 13px; }
+
+        .footer-col ul a {
+            color: white;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 600;
+            opacity: 0.88;
+            transition: opacity 0.2s;
+        }
+
+        .footer-col ul a:hover { opacity: 1; text-decoration: underline; }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.18);
+            padding: 24px 0;
+            text-align: center;
+            font-size: 13px;
+            opacity: 0.65;
+        }
+
+        /* ========================
+           SCROLL FADE-IN
+        ======================== */
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.65s ease, transform 0.65s ease;
+        }
+
+        .fade-in.visible { opacity: 1; transform: none; }
+
+        /* ========================
+           RESPONSIVE
+        ======================== */
+
+        @media (max-width: 1024px) {
+            .menu-grid { grid-template-columns: repeat(2, 1fr); }
+            .footer-grid { grid-template-columns: 1fr 1fr; gap: 36px; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links   { display: none; }
+            .lang-pills  { display: none; }
+            .nav-mobile-toggle { display: block; }
+            .menu-grid   { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+            .ing-2, .ing-4, .ing-7, .ing-9, .ing-10 { display: none; }
+            .ing-1, .ing-3, .ing-5, .ing-6 { width: 95px; }
+            .ing-8 { width: 65px; }
+        }
+
+        @media (max-width: 480px) {
+            .ing-1, .ing-3 { width: 80px; }
+            .ing-5, .ing-6 { width: 70px; }
+            .ing-8 { width: 55px; }
+        }
+
+        /* RTL overrides */
+        [dir="rtl"] .nav-inner    { flex-direction: row-reverse; }
+        [dir="rtl"] .nav-right    { flex-direction: row-reverse; }
+        [dir="rtl"] .nav-links    { flex-direction: row-reverse; }
+        [dir="rtl"] .card-footer  { flex-direction: row-reverse; }
+        [dir="rtl"] .info-note    { text-align: right; }
+        [dir="rtl"] .footer-grid  { direction: rtl; }
+        [dir="rtl"] .footer-col ul { align-items: flex-end; }
+        [dir="rtl"] .footer-bottom { direction: rtl; }
+        [dir="rtl"] .category-tabs { direction: rtl; }
+        [dir="rtl"] .tags-wrap    { direction: rtl; }
+    </style>
+</head>
+<body>
+
+<a href="#main" class="skip-link" data-i18n="skip_to_main">Hoppa till innehållet</a>
+
+<!-- ======================== NAVIGATION ======================== -->
+<nav aria-label="Huvudmeny">
+    <div class="nav-inner">
+        <!-- Logo -->
+        <a href="#home" class="logo-badge" aria-label="Sandhem Pizzeria — startsida">
+            <img class="logo-img" src="Assets/logo.png" alt="Sandhem Pizzeria">
+        </a>
+
+        <!-- Desktop links -->
+        <ul class="nav-links">
+            <li><a href="#home"   data-i18n="nav_home">Hem</a></li>
+            <li><a href="#menu"   data-i18n="nav_menu">Meny</a></li>
+            <li><a href="#footer" data-i18n="nav_contact">Kontakt</a></li>
+        </ul>
+
+        <!-- Right side -->
+        <div class="nav-right">
+            <select id="lang-select" class="lang-select" aria-label="Välj språk">
+                <option value="sv">Svenska</option>
+                <option value="en">English</option>
+                <option value="ar">العربية</option>
+            </select>
+            <a href="tel:0515760004" class="phone-btn" aria-label="Ring 0515-76 00 04"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right:6px;flex-shrink:0"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 012 2.18 2 2 0 014 0h3a2 2 0 012 1.72c.13.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L8.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0122 16.92z"/></svg>0515-76 00 04</a>
+            <button class="nav-mobile-toggle" id="mobile-toggle" aria-label="Öppna meny" aria-expanded="false" aria-controls="mobile-menu">&#9776;</button>
+        </div>
+    </div>
+</nav>
+
+<!-- Mobile dropdown -->
+<div id="mobile-menu" aria-label="Mobilmeny">
+    <ul>
+        <li><a href="#home"   data-i18n="nav_home"    data-close-menu>Hem</a></li>
+        <li><a href="#menu"   data-i18n="nav_menu"    data-close-menu>Meny</a></li>
+        <li><a href="#footer" data-i18n="nav_contact" data-close-menu>Kontakt</a></li>
+    </ul>
+    <div class="mobile-lang-row" role="group" aria-label="Språkval">
+        <button class="lang-pill active" data-lang="sv" aria-label="Svenska">SV</button>
+        <button class="lang-pill"        data-lang="en" aria-label="English">EN</button>
+        <button class="lang-pill"        data-lang="ar" aria-label="العربية">AR</button>
+    </div>
+</div>
+
+<main id="main">
+
+<!-- ======================== HERO ======================== -->
+<section class="hero" id="home" aria-label="Välkomstsektion">
+    <!-- Scattered ingredients (decorative real photo assets) -->
+    <img class="ingredient ing-1"  src="Assets/4PC0Gy5LJt9gx1LT596KEeOxVk0.png_width=1200%26height=1200.png" alt="" aria-hidden="true" loading="eager">
+    <img class="ingredient ing-2"  src="Assets/Okjb0nB1GOkYPwcntjxG2t9dOU.png_width=1200%26height=1200.png" alt="" aria-hidden="true" loading="eager">
+    <img class="ingredient ing-3"  src="Assets/kP2NqpJxzs3mxd89TNdxyZvyms.png_width=1200%26height=1200.png"  alt="" aria-hidden="true" loading="eager">
+    <img class="ingredient ing-4"  src="Assets/bvrc0x9pG8w1OtGBtKBKRFnW4cM.png_width=1200%26height=1200.png" alt="" aria-hidden="true" loading="eager">
+    <img class="ingredient ing-5"  src="Assets/WSIxf52atDWJJfphIQ7KE7eYvM.png_width=1200%26height=1200.png"  alt="" aria-hidden="true" loading="eager">
+    <img class="ingredient ing-6"  src="Assets/PhZZgLMJNd9CBnmdNFn6oZ4geIo.png_width=1200%26height=1200.png" alt="" aria-hidden="true" loading="eager">
+    <img class="ingredient ing-7"  src="Assets/Oh7T6jN4XYvDVriZHd3zwKwGrUs.png_width=1200%26height=1200.png" alt="" aria-hidden="true" loading="eager">
+    <img class="ingredient ing-8"  src="Assets/5gHI1hMjMHXnIKWwZWDGepesMS4.png_width=1200%26height=1200.png" alt="" aria-hidden="true" loading="eager">
+    <img class="ingredient ing-9"  src="Assets/NeeY359LTfhcwSN6JhuBh0Y8Bac.png_width=1200%26height=1200.png" alt="" aria-hidden="true" loading="eager">
+    <img class="ingredient ing-10" src="Assets/w4TnZiWCs3LkQhqdYmp5AucEXFA.png_width=1200%26height=1200.png" alt="" aria-hidden="true" loading="eager">
+
+    <div class="hero-content">
+        <h1 data-i18n="hero_title">Nybakad Pizza,<br>Välkommen Hem!</h1>
+        <p data-i18n="hero_subtitle">Samla familjen och njut av nybakad pizza gjord med kärlek — mitt i Sandhem.</p>
+        <a href="#menu" class="hero-cta" data-i18n="hero_cta">Se Menyn</a>
+        <div class="hero-wine-bubble" aria-hidden="true">
+            🍷 <span data-i18n="extra_wine_beer">Vin &amp; öl till maten</span>
+        </div>
+    </div>
+
+    <div class="hero-pizza-wrap" aria-hidden="true">
+        <img
+            class="hero-pizza"
+            src="Assets/ilD3FzfskejkXM7jRyVgKSBEE5I.png_width=1200%26height=1200.png"
+            alt=""
+            loading="eager"
+        >
+    </div>
+</section>
+
+<!-- ======================== MENU ======================== -->
+<section id="menu" aria-labelledby="menu-heading">
+    <div class="section-inner fade-in">
+        <h2 class="section-title" id="menu-heading" data-i18n="menu_title">Vår Meny</h2>
+        <p class="section-subtitle" data-i18n="menu_subtitle">Tomatsås &amp; ost ingår till alla pizzor!</p>
+
+        <!-- Category tabs — inspired by Pepper's menu navigation -->
+        <div class="category-tabs" role="group" aria-label="Filtrera meny efter kategori">
+            <button class="cat-tab" data-cat="all" aria-pressed="false">
+                <span class="cat-dot" aria-hidden="true"></span>
+                <span data-i18n="cat_all">Alla</span>
+            </button>
+            <button class="cat-tab active" data-cat="pizza" aria-pressed="true">
+                <span aria-hidden="true">🍕</span> <span data-i18n="cat_pizza">Pizzor</span>
+            </button>
+            <button class="cat-tab" data-cat="rulle" aria-pressed="false">
+                <span aria-hidden="true">🌯</span> <span data-i18n="cat_rulle">Rullar</span>
+            </button>
+            <button class="cat-tab" data-cat="tallrik" aria-pressed="false">
+                <span aria-hidden="true">🍽️</span> <span data-i18n="cat_tallrik">Tallrik</span>
+            </button>
+            <button class="cat-tab" data-cat="sallad" aria-pressed="false">
+                <span aria-hidden="true">🥗</span> <span data-i18n="cat_sallad">Sallader</span>
+            </button>
+            <button class="cat-tab" data-cat="alacarte" aria-pressed="false">
+                <span aria-hidden="true">🥩</span> <span data-i18n="cat_alacarte">À la Carte</span>
+            </button>
+        </div>
+
+        <!-- Info strip: allergy, family pizza, extras — compact chips near the tabs -->
+        <div class="menu-info-strip">
+            <button class="info-chip info-chip--allergy" id="chip-allergy" aria-expanded="false" aria-controls="panel-allergy">
+                ⚠️ <span data-i18n="info_allergy_chip">Allergi?</span>
+            </button>
+            <button class="info-chip info-chip--family open" id="chip-family" aria-expanded="true" aria-controls="panel-family">
+                🍕 <span data-i18n="info_family_chip">Familjepizza</span>
+            </button>
+            <button class="info-chip info-chip--extras open" id="chip-extras" aria-expanded="true" aria-controls="panel-extras">
+                ➕ <span data-i18n="info_extras_chip">Extra &amp; Dryck</span>
+            </button>
+
+            <div class="info-panel" id="panel-allergy" hidden>
+                <span data-i18n="allergy_panel">Har du en allergi? Fråga oss alltid innan du beställer.</span>
+            </div>
+            <div class="info-panel" id="panel-family">
+                <div class="tags-wrap">
+                    <span class="tag">Nr 1–7: <strong>325 kr</strong></span>
+                    <span class="tag">Nr 8–17: <strong>335 kr</strong></span>
+                    <span class="tag">Nr 18–32: <strong>340 kr</strong></span>
+                    <span class="tag">Nr 33–47: <strong>350 kr</strong></span>
+                    <span class="tag">Nr 48–51: <strong>360 kr</strong></span>
+                </div>
+            </div>
+            <div class="info-panel" id="panel-extras">
+                <div class="tags-wrap">
+                    <span class="tag">🥫 <span data-i18n="extra_sauce">Sås 15 kr</span></span>
+                    <span class="tag">🥩 <span data-i18n="extra_meat">Kött/Skaldjur +20 kr</span></span>
+                    <span class="tag">🥦 <span data-i18n="extra_veg">Grönsaker/Pommes +20 kr</span></span>
+                    <span class="tag pizza-only">🫙 <span data-i18n="extra_gluten">Glutenfri botten +40 kr</span></span>
+                    <span class="tag">🥤 <span data-i18n="extra_drink33">Dricka 33cl 25 kr</span></span>
+                    <span class="tag">🥤 <span data-i18n="extra_drink15">Dricka 1,5L 50 kr</span></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Menu cards grid -->
+        <div class="menu-grid" id="menu-grid"></div>
+    </div>
+</section>
+
+</main>
+
+<!-- ======================== FOOTER ======================== -->
+<footer id="footer" aria-label="Sidfot">
+    <div class="footer-inner">
+        <div class="footer-grid">
+            <!-- Col 1: Logo + Hours -->
+            <div>
+                <img class="footer-logo" src="Assets/logo.png" alt="Sandhem Pizzeria">
+                <p class="footer-address">
+                    Sandhem, Sverige<br>
+                    <a href="tel:0515760004" class="footer-tel">TEL: 0515-760004</a>
+                </p>
+                <p class="footer-hours">
+                    <strong data-i18n="hours_weekday">Mån–Tors:</strong> 14:00 – 20:00<br>
+                    <strong data-i18n="hours_friday">Fredag:</strong> 12:00 – 21:00<br>
+                    <strong data-i18n="hours_saturday">Lördag:</strong> 12:00 – 21:00<br>
+                    <strong data-i18n="hours_sunday">Söndag:</strong> 12:00 – 20:00<br>
+                    <br>
+                    <strong>AW Fre &amp; Lör:</strong> 17:00 – 20:00
+                </p>
+                <p class="footer-catering" data-i18n="catering">Vi ordnar catering!</p>
+            </div>
+
+            <!-- Col 2: Menu links -->
+            <div class="footer-col">
+                <h4 data-i18n="footer_menu_h">MENY</h4>
+                <ul>
+                    <li><a href="#home"   data-i18n="nav_home">Hem</a></li>
+                    <li><a href="#menu"   data-i18n="nav_menu">Meny</a></li>
+                    <li><a href="#footer" data-i18n="nav_contact">Kontakt</a></li>
+                </ul>
+            </div>
+
+            <!-- Col 3: Social -->
+            <div class="footer-col">
+                <h4 data-i18n="footer_social_h">SOCIAL</h4>
+                <ul>
+                    <li><a href="#">📸 Instagram</a></li>
+                    <li><a href="#">👍 Facebook</a></li>
+                    <li><a href="#">⭐ TripAdvisor</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2026 Sandhem Pizzeria &nbsp;·&nbsp; <span data-i18n="rights">Alla rättigheter förbehållna.</span></p>
+        </div>
+    </div>
+</footer>
+
+<script>
+/* ========================
+   TRANSLATIONS
+======================== */
+const i18n = {
+    sv: {
+        nav_home: 'Hem', nav_menu: 'Meny', nav_contact: 'Kontakt',
+        hero_title: 'Nybakad Pizza,<br>Välkommen Hem!',
+        hero_subtitle: 'Samla familjen och njut av nybakad pizza gjord med kärlek — mitt i Sandhem.',
+        hero_cta: 'Se Menyn',
+        menu_title: 'Vår Meny',
+        menu_subtitle: 'Tomatsås & ost ingår till alla pizzor!',
+        cat_all: 'Alla', cat_pizza: 'Pizzor', cat_rulle: 'Rullar',
+        cat_tallrik: 'Tallrik', cat_sallad: 'Sallader', cat_alacarte: 'À la Carte',
+        order_btn: 'Beställ Nu',
+        family_title: '🍕 Familjepizza', extras_title: 'Extra',
+        extra_sauce: 'Sås 15 kr', extra_meat: 'Kött/Skaldjur +20 kr',
+        extra_veg: 'Grönsaker/Pommes +20 kr', extra_gluten: 'Glutenfri botten +40 kr',
+        extra_drink33: 'Dricka 33cl 25 kr', extra_drink15: 'Dricka 1,5L 50 kr',
+        extra_wine_beer: 'Vin & öl till maten',
+        allergy_note: 'Har du en allergi? Fråga oss!',
+        info_allergy_chip: 'Allergi?', info_family_chip: 'Familjepizza', info_extras_chip: 'Extra & Dryck',
+        allergy_panel: 'Har du en allergi? Fråga oss alltid innan du beställer.',
+        hours_weekday: 'Mån–Tors:', hours_friday: 'Fredag:',
+        hours_saturday: 'Lördag:', hours_sunday: 'Söndag:',
+        catering: 'Vi ordnar catering!',
+        footer_menu_h: 'MENY', footer_contact_h: 'KONTAKT', footer_social_h: 'SOCIAL',
+        footer_catering_link: 'Catering', footer_allergy_link: 'Allergier',
+        rights: 'Alla rättigheter förbehållna.',
+        skip_to_main: 'Hoppa till innehållet',
+        menu_open: 'Öppna meny',
+        menu_close: 'Stäng meny',
+        order_aria: 'Beställ',
+        call: 'ring',
+    },
+    en: {
+        nav_home: 'Home', nav_menu: 'Menu', nav_contact: 'Contact',
+        hero_title: 'Your Pizza Party<br>Starts Here!',
+        hero_subtitle: 'Gather family and friends and enjoy the best pizza in Sandhem. Freshly baked with the finest ingredients!',
+        hero_cta: 'View Our Menu',
+        menu_title: 'Our Menu',
+        menu_subtitle: 'Tomato sauce & cheese included with every pizza!',
+        cat_all: 'All', cat_pizza: 'Pizzas', cat_rulle: 'Wraps',
+        cat_tallrik: 'Platters', cat_sallad: 'Salads', cat_alacarte: 'À la Carte',
+        order_btn: 'Order Now',
+        family_title: '🍕 Family Pizza', extras_title: 'Extras',
+        extra_sauce: 'Sauce 15 kr', extra_meat: 'Meat/Seafood +20 kr',
+        extra_veg: 'Veggies/Fries +20 kr', extra_gluten: 'Gluten-free crust +40 kr',
+        extra_drink33: 'Drink 33cl 25 kr', extra_drink15: 'Drink 1.5L 50 kr',
+        extra_wine_beer: 'We serve wine & beer',
+        allergy_note: 'Do you have an allergy? Ask us!',
+        info_allergy_chip: 'Allergy?', info_family_chip: 'Family Pizza', info_extras_chip: 'Extras & Drinks',
+        allergy_panel: 'Do you have an allergy? Always ask us before ordering.',
+        hours_weekday: 'Mon–Thu:', hours_friday: 'Friday:',
+        hours_saturday: 'Saturday:', hours_sunday: 'Sunday:',
+        catering: 'We Do Catering!',
+        footer_menu_h: 'MENU', footer_contact_h: 'CONTACT', footer_social_h: 'SOCIAL',
+        footer_catering_link: 'Catering', footer_allergy_link: 'Allergies',
+        rights: 'All rights reserved.',
+        skip_to_main: 'Skip to main content',
+        menu_open: 'Open menu',
+        menu_close: 'Close menu',
+        order_aria: 'Order',
+        call: 'call',
+    },
+    ar: {
+        nav_home: 'الرئيسية', nav_menu: 'القائمة', nav_contact: 'اتصل بنا',
+        hero_title: 'حفلة البيتزا<br>تبدأ هنا!',
+        hero_subtitle: 'اجمع عائلتك وأصدقاءك واستمتع بأفضل بيتزا في ساندهيم. طازجة ومصنوعة بأجود المكونات!',
+        hero_cta: 'عرض القائمة',
+        menu_title: 'قائمتنا',
+        menu_subtitle: '!صلصة الطماطم والجبنة مع كل البيتزا',
+        cat_all: 'الكل', cat_pizza: 'بيتزا', cat_rulle: 'لفائف',
+        cat_tallrik: 'أطباق', cat_sallad: 'سلطات', cat_alacarte: 'آلا كارت',
+        order_btn: 'اطلب الآن',
+        family_title: '🍕 بيتزا عائلية', extras_title: 'إضافات',
+        extra_sauce: 'صلصة 15 كر', extra_meat: 'لحم/مأكولات بحرية +20 كر',
+        extra_veg: 'خضار/بطاطس +20 كر', extra_gluten: 'عجينة خالية من الغلوتين +40 كر',
+        extra_drink33: 'مشروب 33 سل 25 كر', extra_drink15: 'مشروب 1.5 ل 50 كر',
+        extra_wine_beer: 'لدينا نبيذ وبيرة',
+        allergy_note: 'هل لديك حساسية؟ اسألنا!',
+        info_allergy_chip: 'حساسية؟', info_family_chip: 'بيتزا عائلية', info_extras_chip: 'إضافات ومشروبات',
+        allergy_panel: 'هل لديك حساسية؟ اسألنا دائماً قبل الطلب.',
+        hours_weekday: 'الاثنين–الخميس:', hours_friday: 'الجمعة:',
+        hours_saturday: 'السبت:', hours_sunday: 'الأحد:',
+        catering: '!نقدم خدمة الكيترينج',
+        footer_menu_h: 'القائمة', footer_contact_h: 'اتصل بنا', footer_social_h: 'التواصل',
+        footer_catering_link: 'كيترينج', footer_allergy_link: 'الحساسية',
+        rights: '.جميع الحقوق محفوظة',
+        skip_to_main: 'تخطّي إلى المحتوى',
+        menu_open: 'افتح القائمة',
+        menu_close: 'أغلق القائمة',
+        order_aria: 'اطلب',
+        call: 'اتصل',
+    }
+};
+
+let currentLang = 'sv';
+
+function setLang(lang) {
+    if (!i18n[lang]) return;
+    currentLang = lang;
+    const t = i18n[lang];
+    const isRTL = lang === 'ar';
+
+    document.documentElement.lang = lang;
+    document.documentElement.dir = isRTL ? 'rtl' : 'ltr';
+
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.dataset.i18n;
+        if (t[key] !== undefined) el.innerHTML = t[key];
+    });
+
+    document.querySelectorAll('.lang-pill').forEach(btn => {
+        const isActive = btn.dataset.lang === lang;
+        btn.classList.toggle('active', isActive);
+        btn.setAttribute('aria-pressed', isActive);
+    });
+
+    const sel = document.getElementById('lang-select');
+    if (sel) sel.value = lang;
+
+    // Re-render cards so order-button text + aria-labels match the language
+    if (document.getElementById('menu-grid')?.children.length) {
+        renderMenu();
+        // Reapply current category filter so visibility persists across language switch
+        const activeCat = document.querySelector('.cat-tab.active')?.dataset.cat || 'all';
+        filterCat(activeCat);
+    }
+
+    // Sync mobile-toggle aria-label to current language
+    const toggle = document.getElementById('mobile-toggle');
+    if (toggle) {
+        const isOpen = document.getElementById('mobile-menu')?.classList.contains('open');
+        toggle.setAttribute('aria-label', t[isOpen ? 'menu_close' : 'menu_open']);
+    }
+
+    try { localStorage.setItem('sandhem_lang', lang); } catch(e) {}
+}
+
+/* ========================
+   MENU DATA
+======================== */
+const pizzaImgs = [
+    'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400&q=75',
+    'https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?w=400&q=75',
+    'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=400&q=75',
+    'https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?w=400&q=75',
+    'https://images.unsplash.com/photo-1548369937-47519962c11a?w=400&q=75',
+    'https://images.unsplash.com/photo-1528137871618-79d2761e3fd5?w=400&q=75',
+    'https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?w=400&q=75',
+    'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=400&q=75',
+    'https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=400&q=75',
+];
+const wrapImgs = [
+    'https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=400&q=75',
+    'https://images.unsplash.com/photo-1592415486689-125cbbfcdfed?w=400&q=75',
+    'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=400&q=75',
+    'https://images.unsplash.com/photo-1551782450-a2132b4ba21d?w=400&q=75',
+];
+const saladImgs = [
+    'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&q=75',
+    'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&q=75',
+    'https://images.unsplash.com/photo-1540420773420-3366772f4999?w=400&q=75',
+    'https://images.unsplash.com/photo-1567306301408-9b74779a11af?w=400&q=75',
+    'https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=400&q=75',
+    'https://images.unsplash.com/photo-1505253716362-afaea1d3d1af?w=400&q=75',
+];
+const plateImgs = [
+    'https://images.unsplash.com/photo-1529042410759-befb1204b468?w=400&q=75',
+    'https://images.unsplash.com/photo-1473093295043-cdd812d0e601?w=400&q=75',
+    'https://images.unsplash.com/photo-1544025162-d76694265947?w=400&q=75',
+    'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&q=75',
+    'https://images.unsplash.com/photo-1565299507177-b0ac66763828?w=400&q=75',
+    'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&q=75',
+];
+
+const menuItems = [
+    // ── PIZZOR ──────────────────────────────────────────────────────────
+    { id:1,  cat:'pizza', name:'Margarita',          ing:'Tomatsås, ost, mozzarella',                                               price:125 },
+    { id:2,  cat:'pizza', name:'Funghi',             ing:'Champinjoner, ost',                                                       price:125 },
+    { id:3,  cat:'pizza', name:'Vesuvio',            ing:'Skinka',                                                                  price:125 },
+    { id:4,  cat:'pizza', name:'Capricciosa',        ing:'Skinka, champinjoner',                                                    price:125 },
+    { id:5,  cat:'pizza', name:'Hawaii',             ing:'Skinka, ananas',                                                          price:125 },
+    { id:6,  cat:'pizza', name:'Africana',           ing:'Banan, ananas, currykrydda',                                             price:125 },
+    { id:7,  cat:'pizza', name:'Calzone',            ing:'Skinka',                                                                  price:125 },
+    { id:8,  cat:'pizza', name:'Capri',              ing:'Skinka, räkor',                                                           price:135 },
+    { id:9,  cat:'pizza', name:'Pescatore',          ing:'Tonfisk',                                                                 price:135 },
+    { id:10, cat:'pizza', name:'Roma',               ing:'Tonfisk, räkor',                                                          price:135 },
+    { id:11, cat:'pizza', name:'Jamaica',            ing:'Skinka, räkor, champinjoner',                                            price:135 },
+    { id:12, cat:'pizza', name:'Salami Pizza',       ing:'Salami, lök',                                                            price:135 },
+    { id:13, cat:'pizza', name:'Kebabpizza',         ing:'Champinjoner, lök, kebabkött, sås',                                      price:135 },
+    { id:14, cat:'pizza', name:'Kycklingpizza',      ing:'Kyckling, kebabsås',                                                     price:135 },
+    { id:15, cat:'pizza', name:'Batman',             ing:'Skinka, kebabkött, ost, kebabsås',                                       price:135 },
+    { id:16, cat:'pizza', name:'Mexicana',           ing:'Köttfärs, vitlök, jalapeno, creme bonjour, tacosås',                    price:135 },
+    { id:17, cat:'pizza', name:'Italiano',           ing:'Mozzarella, salami, ruccola',                                            price:135 },
+    { id:18, cat:'pizza', name:'Mamma Mia',          ing:'Salami, köttfärs, paprika, färsk vitlök',                               price:140 },
+    { id:19, cat:'pizza', name:'Lina',               ing:'Skinka, fetaost, bearnaisesås',                                          price:140 },
+    { id:20, cat:'pizza', name:'Quattro Stagioni',   ing:'Skinka, champinjoner, räkor, musslor',                                  price:140 },
+    { id:21, cat:'pizza', name:'Vegetarisk Pizza',   ing:'Champinjoner, tomater, lök, paprika, oliver, sparris, ananas',          price:140 },
+    { id:22, cat:'pizza', name:'Spenatpizza',        ing:'Spenat, champinjoner, lök, fetaost, färsk vitlök',                      price:140 },
+    { id:23, cat:'pizza', name:'Fem Ostar',          ing:'Fetaost, gorgonzolaost, mozzarella, creme bonjour',                     price:140 },
+    { id:24, cat:'pizza', name:'Ciao Ciao',          ing:'Champinjoner, lök, fläskfilé, vitlök',                                  price:140 },
+    { id:25, cat:'pizza', name:'Kyckling A La King', ing:'Kyckling, ananas, banan, currykrydda, jordnötter',                      price:150 },
+    { id:26, cat:'pizza', name:'Tommy',              ing:'Kebab, salami, stark sås, bearnaisesås',                                price:150 },
+    { id:27, cat:'pizza', name:'Emelie Special',     ing:'Kebabkött, sallad, tomat, gurka, lök, sås',                            price:150 },
+    { id:28, cat:'pizza', name:'Daniel Special',     ing:'Fläskfilé, sparris, färska tomater, lök, bearnaisesås',                price:150 },
+    { id:29, cat:'pizza', name:'Hot Pepper',         ing:'Skinka, salami, jalapeno, färsk vitlök, chilipulver',                  price:150 },
+    { id:30, cat:'pizza', name:'Kärlekspizza',       ing:'Mozzarella, räkor, crabfish, ruccola',                                  price:150 },
+    { id:31, cat:'pizza', name:'Chefs Pizza',        ing:'Mozzarella, bacon, salami, räkor',                                      price:150 },
+    { id:32, cat:'pizza', name:'My Love',            ing:'Skinka, räkor, ananas, kebabkött, kebabsås',                           price:150 },
+    { id:33, cat:'pizza', name:'Maria Special',      ing:'Oxfilé, kebabkött, bacon, bearnaisesås',                               price:160 },
+    { id:34, cat:'pizza', name:'Sandhem Special',    ing:'Oxfilé, tomater, skinka, bearnaisesås',                                 price:150 },
+    { id:35, cat:'pizza', name:'Gorgonzola Pizza',   ing:'Gorgonzolaost, oxfilé, paprika, tomater',                              price:150 },
+    { id:36, cat:'pizza', name:'Acapulco',           ing:'Oxfilé, lök, champinjoner, jalapeno, tacosås, färsk vitlök',           price:150 },
+    { id:37, cat:'pizza', name:'Husets Special',     ing:'Oxfilé, lök, tomater, champinjoner, bearnaisesås',                     price:150 },
+    { id:38, cat:'pizza', name:'Black & White',      ing:'Ost, oxfilé, bearnaisesås',                                            price:150 },
+    { id:39, cat:'pizza', name:'Falafel Pizza',      ing:'Falafel, ost, tomater, isbergssallad, rålök, pommes, gurka, kebabsås', price:150 },
+    { id:40, cat:'pizza', name:'Dubbel Calzone',     ing:'Skinka (dubbel botten)',                                               price:150 },
+    { id:41, cat:'pizza', name:'Båtpizza',           ing:'Kebabkött, lök, tomater, gurka, peperoni, kebabsås',                  price:150 },
+    { id:42, cat:'pizza', name:'Ostkantkebab',       ing:'Kebabkött, lök, tomat, kebabsås, peperoni',                           price:150 },
+    { id:43, cat:'pizza', name:'Ostkantskinka',      ing:'Skinka, köttfärs, bearnaisesås',                                       price:150 },
+    { id:44, cat:'pizza', name:'Sandhem',            ing:'Oxfilé, tomater, paprika, champinjoner, bearnaisesås',                 price:150 },
+    { id:45, cat:'pizza', name:'Dubbel Ciao Ciao',   ing:'Fläskfilé, champinjoner, lök, vitlök',                                price:150 },
+    { id:46, cat:'pizza', name:'Lionella Special',   ing:'Oxfilé, fläskfilé, kyckling, bacon, bearnaisesås',                    price:150 },
+    { id:47, cat:'pizza', name:'Idas Veganska',      ing:'Veganost, champinjoner, lök, pommes',                                  price:150 },
+    { id:48, cat:'pizza', name:'San Fransisco',      ing:'Skinka, köttfärs, salami, bearnaisesås',                              price:160 },
+    { id:49, cat:'pizza', name:'Las Vegas',          ing:'Mozzarella, oxfilé, bacon, paprika, bearnaisesås',                    price:160 },
+    { id:50, cat:'pizza', name:'Melton Special',     ing:'Salami, skinka, kebabkött, kebabsås, bacon',                          price:160 },
+    { id:51, cat:'pizza', name:'Ferbo Special',      ing:'Ananas, banan, lök, jordnötter, champinjoner, kebabkött, kebabsås',   price:160 },
+
+    // ── RULLAR ──────────────────────────────────────────────────────────
+    { id:52, cat:'rulle', name:'Blandrulle',    ing:'Ost, kebabkött, rå lök, pommes, sås (Nöt/Fläsk/Kyckling)', price:150 },
+    { id:53, cat:'rulle', name:'Falafelrulle',  ing:'Falafel, tomater, lök, gurka, sallad, kebabsås',           price:135 },
+    { id:54, cat:'rulle', name:'Kycklingrulle', ing:'Kyckling, lök, tomater, gurka, sallad, kebabsås',          price:135 },
+    { id:55, cat:'rulle', name:'Kebabrulle',    ing:'Kebabkött, lök, tomater, sallad, gurka, kebabsås',         price:135 },
+
+    // ── TALLRIK ─────────────────────────────────────────────────────────
+    { id:56, cat:'tallrik', name:'Chicken Nuggets',  ing:'10st Nuggets med pommes & dressing',                                    price:135 },
+    { id:57, cat:'tallrik', name:'Falafeltallrik',   ing:'Falafel, pommes, sallad, lök, tomater, gurka, peperoni, kebabsås',     price:135 },
+    { id:58, cat:'tallrik', name:'Kycklingtallrik',  ing:'Kyckling, pommes, sallad, lök, tomater, gurka, peperoni, kebabsås',    price:135 },
+    { id:59, cat:'tallrik', name:'Kebabtallrik',     ing:'Kebabkött, pommes, sallad, lök, tomater, gurka, kebabsås',             price:135 },
+    { id:60, cat:'tallrik', name:'Hamburgertallrik', ing:'Hamburgare 150g, dressing, lök, tomater, sallad, ost, pommes',         price:135 },
+    { id:61, cat:'tallrik', name:'Pommestallrik',    ing:'Pommes frites',                                                        price:80  },
+
+    // ── SALLADER ────────────────────────────────────────────────────────
+    { id:62, cat:'sallad', name:'Tonfisksallad',    ing:'Tonfisk, isbergssallad, tomater, gurka, oliver, champinjoner',                          price:135 },
+    { id:63, cat:'sallad', name:'Grekisk Sallad',   ing:'Fetaost, isbergssallad, tomater, oliver, gurka, champinjoner, paprika, lök, vitlökssås', price:135 },
+    { id:64, cat:'sallad', name:'Skinksallad',      ing:'Ost, skinka, sallad, tomater, gurka, ananas',                                           price:135 },
+    { id:65, cat:'sallad', name:'Falafelsallad',    ing:'Ost, falafel, isbergssallad, tomater, gurka, ananas, peperoni, lök',                    price:135 },
+    { id:66, cat:'sallad', name:'Kycklingssallad',  ing:'Kyckling, isbergssallad, lök, tomater, gurka, paprika, kebabsås, sparris',              price:135 },
+    { id:67, cat:'sallad', name:'Kebabsallad',      ing:'Kebabkött, isbergssallad, lök, tomater, gurka, ananas, ost, kebabsås',                  price:135 },
+    { id:71, cat:'sallad', name:'Räksallad',        ing:'Räkor, isbergssallad, tomater, gurka, ägg, citron',                                     price:145 },
+
+    // ── À LA CARTE ──────────────────────────────────────────────────────
+    { id:68, cat:'alacarte', name:'Fläsk Noisette',     ing:'Färska grönsaker, pommes, bearnaisesås',                    price:160 },
+    { id:69, cat:'alacarte', name:'Lövbit',              ing:'Lövbit med pommes & bearnaisesås',                          price:160 },
+    { id:70, cat:'alacarte', name:'Hemlagad Schnitzel',  ing:'Pommes, sallad, tomater, gurka, bearnaisesås, lök',         price:160 },
+];
+
+const imgPools = {
+    pizza:    pizzaImgs,
+    rulle:    wrapImgs,
+    sallad:   saladImgs,
+    tallrik:  plateImgs,
+    alacarte: plateImgs,
+};
+
+// Local image overrides — keyed by item name
+const localImgs = {
+    // Tallrik
+    'Chicken Nuggets':    'biler%20tallrik/Chicken%20Nuggets.png',
+    'Falafeltallrik':     'biler%20tallrik/Falafeltallrik.png',
+    'Kycklingtallrik':    'biler%20tallrik/Kycklingtallrik.png',
+    'Kebabtallrik':       'biler%20tallrik/Kebabtallrik.png',
+    'Hamburgertallrik':   'biler%20tallrik/Hamburgertallrik.png',
+    'Pommestallrik':      'biler%20tallrik/Pommestallrik.png',
+    // À la carte
+    'Fläsk Noisette':     'biler%20%C3%80%20la%20carte/Fl%C3%A4sk%20Noisette.png',
+    'Lövbit':             'biler%20%C3%80%20la%20carte/L%C3%B6vbit.png',
+    'Hemlagad Schnitzel': 'biler%20%C3%80%20la%20carte/Hemlagad%20Schnitzel.png',
+    // Rullar
+    'Blandrulle':         'biler%20Rullar/Blandrulle.png',
+    'Falafelrulle':       'biler%20Rullar/Falafelrulle.png',
+    'Kycklingrulle':      'biler%20Rullar/Kycklingrulle.png',
+    'Kebabrulle':         'biler%20Rullar/Kebabrulle.png',
+    // Sallader
+    'Räksallad':          'biler%20sallder/R%C3%A4ksallad.png',
+};
+
+// Pizza files follow the pattern "biler pizzor/{id} {name}.png".
+// The single exception is id 26 where the filename has no space ("26Tommy.png").
+function pizzaImgPath(item) {
+    const filename = item.id === 26 ? '26Tommy.png' : `${item.id} ${item.name}.png`;
+    return 'biler%20pizzor/' + encodeURIComponent(filename);
+}
+
+function imgFor(item, indexInCat) {
+    if (localImgs[item.name]) return localImgs[item.name];
+    if (item.cat === 'pizza')  return pizzaImgPath(item);
+    const pool = imgPools[item.cat] || pizzaImgs;
+    return pool[indexInCat % pool.length];
+}
+
+const PHONE = '0515760004';
+const PHONE_DISPLAY = '0515-76 00 04';
+
+function renderMenu() {
+    const t   = i18n[currentLang];
+    const grid = document.getElementById('menu-grid');
+    const catCounters = {};
+    grid.innerHTML = menuItems.map(item => {
+        const idx = catCounters[item.cat] = (catCounters[item.cat] ?? -1) + 1;
+        const numLabel = item.cat === 'pizza'
+            ? `<span class="card-num"># ${item.id}</span>`
+            : '';
+        return `
+        <div class="menu-card" data-cat="${item.cat}">
+            <div class="card-img-wrap">
+                <img src="${imgFor(item, idx)}" alt="${item.name}" loading="lazy">
+            </div>
+            ${numLabel}
+            <div class="card-name">${item.name}</div>
+            <p class="card-ingredients">${item.ing}</p>
+            <div class="card-footer">
+                <span class="card-price">${item.price} kr</span>
+            </div>
+        </div>`;
+    }).join('');
+}
+
+function filterCat(cat) {
+    document.querySelectorAll('.cat-tab').forEach(btn => {
+        const isActive = btn.dataset.cat === cat;
+        btn.classList.toggle('active', isActive);
+        btn.setAttribute('aria-pressed', isActive);
+    });
+
+    document.querySelectorAll('.menu-card').forEach(card => {
+        card.classList.toggle('hidden', cat !== 'all' && card.dataset.cat !== cat);
+    });
+
+    // Family Pizza chip only makes sense on pizza/all tabs
+    const showFamily = (cat === 'all' || cat === 'pizza');
+    const familyChip = document.getElementById('chip-family');
+    if (familyChip) {
+        familyChip.style.display = showFamily ? '' : 'none';
+        if (!showFamily) {
+            document.getElementById('panel-family').hidden = true;
+            familyChip.classList.remove('open');
+            familyChip.setAttribute('aria-expanded', 'false');
+        }
+    }
+
+    // Gluten-free tag only relevant for pizza
+    document.querySelectorAll('#panel-extras .pizza-only').forEach(el => {
+        el.style.display = showFamily ? '' : 'none';
+    });
+}
+
+function initInfoStrip() {
+    const chips = [
+        { chipId: 'chip-allergy', panelId: 'panel-allergy' },
+        { chipId: 'chip-family',  panelId: 'panel-family'  },
+        { chipId: 'chip-extras',  panelId: 'panel-extras'  },
+    ];
+
+    chips.forEach(({ chipId, panelId }) => {
+        const chip  = document.getElementById(chipId);
+        const panel = document.getElementById(panelId);
+        if (!chip || !panel) return;
+
+        chip.addEventListener('click', () => {
+            const opening = panel.hidden;
+            chips.forEach(c => {
+                const p = document.getElementById(c.panelId);
+                const b = document.getElementById(c.chipId);
+                if (p) p.hidden = true;
+                if (b) { b.classList.remove('open'); b.setAttribute('aria-expanded', 'false'); }
+            });
+            if (opening) {
+                panel.hidden = false;
+                chip.classList.add('open');
+                chip.setAttribute('aria-expanded', 'true');
+            }
+        });
+    });
+}
+
+function toggleMobileMenu() {
+    const m = document.getElementById('mobile-menu');
+    const t = document.getElementById('mobile-toggle');
+    const opening = !m.classList.contains('open');
+    m.classList.toggle('open', opening);
+    t.setAttribute('aria-expanded', opening);
+    t.setAttribute('aria-label', i18n[currentLang][opening ? 'menu_close' : 'menu_open']);
+}
+
+function closeMobileMenu() {
+    const m = document.getElementById('mobile-menu');
+    const t = document.getElementById('mobile-toggle');
+    m.classList.remove('open');
+    t.setAttribute('aria-expanded', 'false');
+    t.setAttribute('aria-label', i18n[currentLang].menu_open);
+}
+
+/* ========================
+   EVENT WIRING
+======================== */
+document.querySelectorAll('.lang-pill').forEach(btn => {
+    btn.addEventListener('click', () => {
+        setLang(btn.dataset.lang);
+        if (document.getElementById('mobile-menu').classList.contains('open')) {
+            closeMobileMenu();
+        }
+    });
+});
+
+const langSelectEl = document.getElementById('lang-select');
+if (langSelectEl) {
+    langSelectEl.addEventListener('change', () => setLang(langSelectEl.value));
+}
+
+document.querySelectorAll('.cat-tab').forEach(btn => {
+    btn.addEventListener('click', () => filterCat(btn.dataset.cat));
+});
+
+initInfoStrip();
+
+document.getElementById('mobile-toggle').addEventListener('click', toggleMobileMenu);
+
+document.querySelectorAll('[data-close-menu]').forEach(el => {
+    el.addEventListener('click', closeMobileMenu);
+});
+
+/* Close mobile menu on Escape */
+document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && document.getElementById('mobile-menu').classList.contains('open')) {
+        closeMobileMenu();
+        document.getElementById('mobile-toggle').focus();
+    }
+});
+
+/* Scroll fade-in */
+const fadeObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.05 });
+document.querySelectorAll('.fade-in').forEach(el => fadeObserver.observe(el));
+setTimeout(() => {
+    document.querySelectorAll('.fade-in').forEach(el => el.classList.add('visible'));
+}, 300);
+
+/* Scroll-driven hero pizza rotation
+   — rotates while the hero is in view, stops when scrolled past for perf. */
+const heroPizza = document.querySelector('.hero-pizza');
+const heroSection = document.querySelector('.hero');
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+if (heroPizza && heroSection && !reduceMotion) {
+    let rafId = null;
+    const ROTATE_PER_PX = 0.18; // degrees per pixel scrolled
+
+    const updateRotation = () => {
+        const heroBottom = heroSection.offsetTop + heroSection.offsetHeight;
+        // Only rotate while pizza is plausibly visible
+        if (window.scrollY < heroBottom + 200) {
+            heroPizza.style.transform = `rotate(${window.scrollY * ROTATE_PER_PX}deg)`;
+        }
+        rafId = null;
+    };
+
+    window.addEventListener('scroll', () => {
+        if (rafId) return;
+        rafId = requestAnimationFrame(updateRotation);
+    }, { passive: true });
+}
+
+/* Init */
+renderMenu();
+filterCat('pizza');
+try {
+    const saved = localStorage.getItem('sandhem_lang');
+    if (saved && i18n[saved]) setLang(saved);
+} catch(e) {}
+</script>
+</body>
+</html>
