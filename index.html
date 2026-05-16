@@ -813,13 +813,19 @@
 
         @media (max-width: 768px) {
             .nav-links   { display: none; }
-            .lang-pills  { display: none; }
+            .lang-select { display: none; }   /* language picker lives in the hamburger menu on mobile */
             .nav-mobile-toggle { display: block; }
             .menu-grid   { grid-template-columns: 1fr; }
             .footer-grid { grid-template-columns: 1fr; gap: 28px; }
             .ing-2, .ing-4, .ing-7, .ing-9, .ing-10 { display: none; }
             .ing-1, .ing-3, .ing-5, .ing-6 { width: 95px; }
             .ing-8 { width: 65px; }
+            /* Tighten the gap between the CTA and the half-pizza on mobile.
+               Pizza wrap is 86vw wide → half-visible height is 43vw;
+               padding-bottom = that + a fixed 32px gap.
+               CTA goes block-level to drop the inline-block line-box descender. */
+            .hero { min-height: auto; padding-bottom: calc(43vw + 32px); }
+            .hero-cta { display: block; width: fit-content; margin-inline: auto; }
         }
 
         @media (max-width: 480px) {
@@ -1002,7 +1008,7 @@
             <div>
                 <img class="footer-logo" src="Assets/logo.png" alt="Sandhem Pizzeria">
                 <p class="footer-address">
-                    Sandhem, Sverige<br>
+                    <span data-i18n="call_us">Ring oss</span><br>
                     <a href="tel:0515760004" class="footer-tel">TEL: 0515-760004</a>
                 </p>
                 <p class="footer-catering" data-i18n="catering">Vi ordnar catering!</p>
@@ -1075,6 +1081,7 @@ const i18n = {
         catering: 'Vi ordnar catering!',
         footer_menu_h: 'MENY', footer_contact_h: 'KONTAKT', footer_social_h: 'SOCIAL',
         footer_hours_h: 'ÖPPETTIDER',
+        call_us: 'Ring oss',
         footer_catering_link: 'Catering', footer_allergy_link: 'Allergier',
         rights: 'Alla rättigheter förbehållna.',
         skip_to_main: 'Hoppa till innehållet',
@@ -1106,6 +1113,7 @@ const i18n = {
         catering: 'We Do Catering!',
         footer_menu_h: 'MENU', footer_contact_h: 'CONTACT', footer_social_h: 'SOCIAL',
         footer_hours_h: 'OPENING HOURS',
+        call_us: 'Call us',
         footer_catering_link: 'Catering', footer_allergy_link: 'Allergies',
         rights: 'All rights reserved.',
         skip_to_main: 'Skip to main content',
@@ -1137,6 +1145,7 @@ const i18n = {
         catering: '!نقدم خدمة الكيترينج',
         footer_menu_h: 'القائمة', footer_contact_h: 'اتصل بنا', footer_social_h: 'التواصل',
         footer_hours_h: 'ساعات العمل',
+        call_us: 'اتصل بنا',
         footer_catering_link: 'كيترينج', footer_allergy_link: 'الحساسية',
         rights: '.جميع الحقوق محفوظة',
         skip_to_main: 'تخطّي إلى المحتوى',
