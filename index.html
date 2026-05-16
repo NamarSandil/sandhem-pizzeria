@@ -1193,14 +1193,8 @@ function setLang(lang) {
 /* ========================
    MENU DATA
 ======================== */
-// Per-category image folders on disk.
-const IMG_FOLDERS = {
-    pizza:    'biler pizzor',
-    rulle:    'biler Rullar',
-    sallad:   'biler sallder',
-    tallrik:  'biler tallrik',
-    alacarte: 'biler À la carte',
-};
+// All menu item images live in a single folder.
+const IMG_FOLDER = 'menu';
 
 // Fallback rotation when a dish has no matching file.
 const FALLBACK_FILES = [
@@ -1384,10 +1378,8 @@ function encodePath(folder, file) {
 }
 
 function imgFor(item, indexInCat) {
-    const folder = IMG_FOLDERS[item.cat];
-    const file   = IMG_FILES[item.name];
-    if (folder && file) return encodePath(folder, file);
-    return encodePath('biler tallrik', FALLBACK_FILES[item.id % FALLBACK_FILES.length]);
+    const file = IMG_FILES[item.name] || FALLBACK_FILES[item.id % FALLBACK_FILES.length];
+    return encodePath(IMG_FOLDER, file);
 }
 
 const PHONE = '0515760004';
