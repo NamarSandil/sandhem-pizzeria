@@ -723,7 +723,7 @@
 
         .footer-grid {
             display: grid;
-            grid-template-columns: 2fr 1fr 1fr;
+            grid-template-columns: 2fr 1fr 1.2fr 1fr;
             gap: 48px;
             padding-bottom: 56px;
         }
@@ -969,10 +969,10 @@
             <div class="info-panel" id="panel-family">
                 <div class="tags-wrap">
                     <span class="tag">Nr 1–7: <strong>325 kr</strong></span>
-                    <span class="tag">Nr 8–17: <strong>335 kr</strong></span>
-                    <span class="tag">Nr 18–32: <strong>340 kr</strong></span>
-                    <span class="tag">Nr 33–47: <strong>350 kr</strong></span>
-                    <span class="tag">Nr 48–51: <strong>360 kr</strong></span>
+                    <span class="tag">Nr 8–18: <strong>335 kr</strong></span>
+                    <span class="tag">Nr 19–33: <strong>340 kr</strong></span>
+                    <span class="tag">Nr 34–48: <strong>350 kr</strong></span>
+                    <span class="tag">Nr 49–52: <strong>360 kr</strong></span>
                 </div>
             </div>
             <div class="info-panel" id="panel-extras">
@@ -998,20 +998,12 @@
 <footer id="footer" aria-label="Sidfot">
     <div class="footer-inner">
         <div class="footer-grid">
-            <!-- Col 1: Logo + Hours -->
+            <!-- Col 1: Logo + Address -->
             <div>
                 <img class="footer-logo" src="Assets/logo.png" alt="Sandhem Pizzeria">
                 <p class="footer-address">
                     Sandhem, Sverige<br>
                     <a href="tel:0515760004" class="footer-tel">TEL: 0515-760004</a>
-                </p>
-                <p class="footer-hours">
-                    <strong data-i18n="hours_weekday">Mån–Tors:</strong> 14:00 – 20:00<br>
-                    <strong data-i18n="hours_friday">Fredag:</strong> 12:00 – 21:00<br>
-                    <strong data-i18n="hours_saturday">Lördag:</strong> 12:00 – 21:00<br>
-                    <strong data-i18n="hours_sunday">Söndag:</strong> 12:00 – 20:00<br>
-                    <br>
-                    <strong>AW Fre &amp; Lör:</strong> 17:00 – 20:00
                 </p>
                 <p class="footer-catering" data-i18n="catering">Vi ordnar catering!</p>
             </div>
@@ -1026,13 +1018,25 @@
                 </ul>
             </div>
 
-            <!-- Col 3: Social -->
+            <!-- Col 3: Opening Hours -->
+            <div class="footer-col">
+                <h4 data-i18n="footer_hours_h">ÖPPETTIDER</h4>
+                <p class="footer-hours">
+                    <strong data-i18n="hours_weekday">Mån–Tors:</strong> 12:00 – 20:00<br>
+                    <strong data-i18n="hours_friday">Fredag:</strong> 12:00 – 21:00<br>
+                    <strong data-i18n="hours_saturday">Lördag:</strong> 12:00 – 21:00<br>
+                    <strong data-i18n="hours_sunday">Söndag:</strong> 12:00 – 20:00<br>
+                    <br>
+                    <strong>AW Fre &amp; Lör:</strong> 17:00 – 20:00
+                </p>
+            </div>
+
+            <!-- Col 4: Social -->
             <div class="footer-col">
                 <h4 data-i18n="footer_social_h">SOCIAL</h4>
                 <ul>
-                    <li><a href="#">📸 Instagram</a></li>
-                    <li><a href="#">👍 Facebook</a></li>
-                    <li><a href="#">⭐ TripAdvisor</a></li>
+                    <li><a href="https://www.instagram.com/sulaiman54296?igsh=dXAwZGI0MDAzbXJv&utm_source=qr" target="_blank" rel="noopener noreferrer">📸 Instagram</a></li>
+                    <li><a href="https://www.facebook.com/people/Sandhems-Pizzeria/61565929584560/?mibextid=wwXIfr&rdid=on5qekLs0I2S50uq&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1DURYWPKNU%2F%3Fmibextid%3DwwXIfr" target="_blank" rel="noopener noreferrer">👍 Facebook</a></li>
                 </ul>
             </div>
         </div>
@@ -1070,6 +1074,7 @@ const i18n = {
         hours_saturday: 'Lördag:', hours_sunday: 'Söndag:',
         catering: 'Vi ordnar catering!',
         footer_menu_h: 'MENY', footer_contact_h: 'KONTAKT', footer_social_h: 'SOCIAL',
+        footer_hours_h: 'ÖPPETTIDER',
         footer_catering_link: 'Catering', footer_allergy_link: 'Allergier',
         rights: 'Alla rättigheter förbehållna.',
         skip_to_main: 'Hoppa till innehållet',
@@ -1100,6 +1105,7 @@ const i18n = {
         hours_saturday: 'Saturday:', hours_sunday: 'Sunday:',
         catering: 'We Do Catering!',
         footer_menu_h: 'MENU', footer_contact_h: 'CONTACT', footer_social_h: 'SOCIAL',
+        footer_hours_h: 'OPENING HOURS',
         footer_catering_link: 'Catering', footer_allergy_link: 'Allergies',
         rights: 'All rights reserved.',
         skip_to_main: 'Skip to main content',
@@ -1130,6 +1136,7 @@ const i18n = {
         hours_saturday: 'السبت:', hours_sunday: 'الأحد:',
         catering: '!نقدم خدمة الكيترينج',
         footer_menu_h: 'القائمة', footer_contact_h: 'اتصل بنا', footer_social_h: 'التواصل',
+        footer_hours_h: 'ساعات العمل',
         footer_catering_link: 'كيترينج', footer_allergy_link: 'الحساسية',
         rights: '.جميع الحقوق محفوظة',
         skip_to_main: 'تخطّي إلى المحتوى',
@@ -1186,38 +1193,23 @@ function setLang(lang) {
 /* ========================
    MENU DATA
 ======================== */
-const pizzaImgs = [
-    'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400&q=75',
-    'https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?w=400&q=75',
-    'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=400&q=75',
-    'https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?w=400&q=75',
-    'https://images.unsplash.com/photo-1548369937-47519962c11a?w=400&q=75',
-    'https://images.unsplash.com/photo-1528137871618-79d2761e3fd5?w=400&q=75',
-    'https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?w=400&q=75',
-    'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=400&q=75',
-    'https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=400&q=75',
-];
-const wrapImgs = [
-    'https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=400&q=75',
-    'https://images.unsplash.com/photo-1592415486689-125cbbfcdfed?w=400&q=75',
-    'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=400&q=75',
-    'https://images.unsplash.com/photo-1551782450-a2132b4ba21d?w=400&q=75',
-];
-const saladImgs = [
-    'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&q=75',
-    'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&q=75',
-    'https://images.unsplash.com/photo-1540420773420-3366772f4999?w=400&q=75',
-    'https://images.unsplash.com/photo-1567306301408-9b74779a11af?w=400&q=75',
-    'https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=400&q=75',
-    'https://images.unsplash.com/photo-1505253716362-afaea1d3d1af?w=400&q=75',
-];
-const plateImgs = [
-    'https://images.unsplash.com/photo-1529042410759-befb1204b468?w=400&q=75',
-    'https://images.unsplash.com/photo-1473093295043-cdd812d0e601?w=400&q=75',
-    'https://images.unsplash.com/photo-1544025162-d76694265947?w=400&q=75',
-    'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&q=75',
-    'https://images.unsplash.com/photo-1565299507177-b0ac66763828?w=400&q=75',
-    'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&q=75',
+// Per-category image folders on disk.
+const IMG_FOLDERS = {
+    pizza:    'biler pizzor',
+    rulle:    'biler Rullar',
+    sallad:   'biler sallder',
+    tallrik:  'biler tallrik',
+    alacarte: 'biler À la carte',
+};
+
+// Fallback rotation when a dish has no matching file.
+const FALLBACK_FILES = [
+    'Chicken Nuggets.png',
+    'Falafeltallrik.png',
+    'Kycklingtallrik.png',
+    'Kebabtallrik.png',
+    'Pommestallrik.png',
+    'Hemlagad Schnitzel.png',
 ];
 
 const menuItems = [
@@ -1233,46 +1225,48 @@ const menuItems = [
     { id:9,  cat:'pizza', name:'Pescatore',          ing:'Tonfisk',                                                                 price:135 },
     { id:10, cat:'pizza', name:'Roma',               ing:'Tonfisk, räkor',                                                          price:135 },
     { id:11, cat:'pizza', name:'Jamaica',            ing:'Skinka, räkor, champinjoner',                                            price:135 },
-    { id:12, cat:'pizza', name:'Salami Pizza',       ing:'Salami, lök',                                                            price:135 },
-    { id:13, cat:'pizza', name:'Kebabpizza',         ing:'Champinjoner, lök, kebabkött, sås',                                      price:135 },
-    { id:14, cat:'pizza', name:'Kycklingpizza',      ing:'Kyckling, kebabsås',                                                     price:135 },
-    { id:15, cat:'pizza', name:'Batman',             ing:'Skinka, kebabkött, ost, kebabsås',                                       price:135 },
-    { id:16, cat:'pizza', name:'Mexicana',           ing:'Köttfärs, vitlök, jalapeno, creme bonjour, tacosås',                    price:135 },
-    { id:17, cat:'pizza', name:'Italiano',           ing:'Mozzarella, salami, ruccola',                                            price:135 },
-    { id:18, cat:'pizza', name:'Mamma Mia',          ing:'Salami, köttfärs, paprika, färsk vitlök',                               price:140 },
-    { id:19, cat:'pizza', name:'Lina',               ing:'Skinka, fetaost, bearnaisesås',                                          price:140 },
-    { id:20, cat:'pizza', name:'Quattro Stagioni',   ing:'Skinka, champinjoner, räkor, musslor',                                  price:140 },
-    { id:21, cat:'pizza', name:'Vegetarisk Pizza',   ing:'Champinjoner, tomater, lök, paprika, oliver, sparris, ananas',          price:140 },
-    { id:22, cat:'pizza', name:'Spenatpizza',        ing:'Spenat, champinjoner, lök, fetaost, färsk vitlök',                      price:140 },
-    { id:23, cat:'pizza', name:'Fem Ostar',          ing:'Fetaost, gorgonzolaost, mozzarella, creme bonjour',                     price:140 },
-    { id:24, cat:'pizza', name:'Ciao Ciao',          ing:'Champinjoner, lök, fläskfilé, vitlök',                                  price:140 },
-    { id:25, cat:'pizza', name:'Kyckling A La King', ing:'Kyckling, ananas, banan, currykrydda, jordnötter',                      price:150 },
-    { id:26, cat:'pizza', name:'Tommy',              ing:'Kebab, salami, stark sås, bearnaisesås',                                price:150 },
-    { id:27, cat:'pizza', name:'Emelie Special',     ing:'Kebabkött, sallad, tomat, gurka, lök, sås',                            price:150 },
-    { id:28, cat:'pizza', name:'Daniel Special',     ing:'Fläskfilé, sparris, färska tomater, lök, bearnaisesås',                price:150 },
-    { id:29, cat:'pizza', name:'Hot Pepper',         ing:'Skinka, salami, jalapeno, färsk vitlök, chilipulver',                  price:150 },
-    { id:30, cat:'pizza', name:'Kärlekspizza',       ing:'Mozzarella, räkor, crabfish, ruccola',                                  price:150 },
-    { id:31, cat:'pizza', name:'Chefs Pizza',        ing:'Mozzarella, bacon, salami, räkor',                                      price:150 },
-    { id:32, cat:'pizza', name:'My Love',            ing:'Skinka, räkor, ananas, kebabkött, kebabsås',                           price:150 },
-    { id:33, cat:'pizza', name:'Maria Special',      ing:'Oxfilé, kebabkött, bacon, bearnaisesås',                               price:160 },
-    { id:34, cat:'pizza', name:'Sandhem Special',    ing:'Oxfilé, tomater, skinka, bearnaisesås',                                 price:150 },
-    { id:35, cat:'pizza', name:'Gorgonzola Pizza',   ing:'Gorgonzolaost, oxfilé, paprika, tomater',                              price:150 },
-    { id:36, cat:'pizza', name:'Acapulco',           ing:'Oxfilé, lök, champinjoner, jalapeno, tacosås, färsk vitlök',           price:150 },
-    { id:37, cat:'pizza', name:'Husets Special',     ing:'Oxfilé, lök, tomater, champinjoner, bearnaisesås',                     price:150 },
-    { id:38, cat:'pizza', name:'Black & White',      ing:'Ost, oxfilé, bearnaisesås',                                            price:150 },
-    { id:39, cat:'pizza', name:'Falafel Pizza',      ing:'Falafel, ost, tomater, isbergssallad, rålök, pommes, gurka, kebabsås', price:150 },
-    { id:40, cat:'pizza', name:'Dubbel Calzone',     ing:'Skinka (dubbel botten)',                                               price:150 },
-    { id:41, cat:'pizza', name:'Båtpizza',           ing:'Kebabkött, lök, tomater, gurka, peperoni, kebabsås',                  price:150 },
-    { id:42, cat:'pizza', name:'Ostkantkebab',       ing:'Kebabkött, lök, tomat, kebabsås, peperoni',                           price:150 },
-    { id:43, cat:'pizza', name:'Ostkantskinka',      ing:'Skinka, köttfärs, bearnaisesås',                                       price:150 },
-    { id:44, cat:'pizza', name:'Sandhem',            ing:'Oxfilé, tomater, paprika, champinjoner, bearnaisesås',                 price:150 },
-    { id:45, cat:'pizza', name:'Dubbel Ciao Ciao',   ing:'Fläskfilé, champinjoner, lök, vitlök',                                price:150 },
-    { id:46, cat:'pizza', name:'Lionella Special',   ing:'Oxfilé, fläskfilé, kyckling, bacon, bearnaisesås',                    price:150 },
-    { id:47, cat:'pizza', name:'Idas Veganska',      ing:'Veganost, champinjoner, lök, pommes',                                  price:150 },
-    { id:48, cat:'pizza', name:'San Fransisco',      ing:'Skinka, köttfärs, salami, bearnaisesås',                              price:160 },
-    { id:49, cat:'pizza', name:'Las Vegas',          ing:'Mozzarella, oxfilé, bacon, paprika, bearnaisesås',                    price:160 },
-    { id:50, cat:'pizza', name:'Melton Special',     ing:'Salami, skinka, kebabkött, kebabsås, bacon',                          price:160 },
-    { id:51, cat:'pizza', name:'Ferbo Special',      ing:'Ananas, banan, lök, jordnötter, champinjoner, kebabkött, kebabsås',   price:160 },
+    { id:12, cat:'pizza', name:'Disco',              ing:'Köttfärs, skinka, räkor',                                                price:140 },
+    { id:13, cat:'pizza', name:'Salami Pizza',       ing:'Salami, lök',                                                            price:135 },
+    { id:14, cat:'pizza', name:'Kebabpizza',         ing:'Champinjoner, lök, kebabkött, sås',                                      price:135 },
+    { id:15, cat:'pizza', name:'Kycklingpizza',      ing:'Kyckling, kebabsås',                                                     price:135 },
+    { id:16, cat:'pizza', name:'Batman',             ing:'Skinka, kebabkött, ost, kebabsås',                                       price:135 },
+    { id:17, cat:'pizza', name:'Mexicana',           ing:'Köttfärs, vitlök, jalapeno, creme bonjour, tacosås',                    price:135 },
+    { id:18, cat:'pizza', name:'Italiano',           ing:'Mozzarella, salami, ruccola',                                            price:135 },
+    { id:19, cat:'pizza', name:'Mamma Mia',          ing:'Salami, köttfärs, paprika, färsk vitlök',                               price:140 },
+    { id:20, cat:'pizza', name:'Lina',               ing:'Skinka, fetaost, bearnaisesås',                                          price:140 },
+    { id:21, cat:'pizza', name:'Quattro Stagioni',   ing:'Skinka, champinjoner, räkor, musslor',                                  price:140 },
+    { id:22, cat:'pizza', name:'Vegetarisk Pizza',   ing:'Champinjoner, tomater, lök, paprika, oliver, sparris, ananas',          price:140 },
+    { id:23, cat:'pizza', name:'Spenatpizza',        ing:'Spenat, champinjoner, lök, fetaost, färsk vitlök',                      price:140 },
+    { id:24, cat:'pizza', name:'Fem Ostar',          ing:'Fetaost, gorgonzolaost, mozzarella, creme bonjour',                     price:140 },
+    { id:25, cat:'pizza', name:'Ciao Ciao',          ing:'Champinjoner, lök, fläskfilé, vitlök',                                  price:140 },
+    { id:26, cat:'pizza', name:'Kyckling A La King', ing:'Kyckling, ananas, banan, currykrydda, jordnötter',                      price:150 },
+    { id:27, cat:'pizza', name:'Tommy',              ing:'Kebab, salami, stark sås, bearnaisesås',                                price:150 },
+    { id:28, cat:'pizza', name:'Emelie Special',     ing:'Kebabkött, sallad, tomat, gurka, lök, sås',                            price:150 },
+    { id:29, cat:'pizza', name:'Daniel Special',     ing:'Fläskfilé, sparris, färska tomater, lök, bearnaisesås',                price:150 },
+    { id:30, cat:'pizza', name:'Hot Pepper',         ing:'Skinka, salami, jalapeno, färsk vitlök, chilipulver',                  price:150 },
+    { id:31, cat:'pizza', name:'Kärlekspizza',       ing:'Mozzarella, räkor, crabfish, ruccola',                                  price:150 },
+    { id:32, cat:'pizza', name:'Chefs Pizza',        ing:'Mozzarella, bacon, salami, räkor',                                      price:150 },
+    { id:33, cat:'pizza', name:'My Love',            ing:'Skinka, räkor, ananas, kebabkött, kebabsås',                           price:150 },
+    { id:34, cat:'pizza', name:'Maria Special',      ing:'Oxfilé, kebabkött, bacon, bearnaisesås',                               price:160 },
+    { id:35, cat:'pizza', name:'Sandhem Special',    ing:'Oxfilé, tomater, skinka, bearnaisesås',                                 price:150 },
+    { id:36, cat:'pizza', name:'Gorgonzola Pizza',   ing:'Gorgonzolaost, oxfilé, paprika, tomater',                              price:150 },
+    { id:37, cat:'pizza', name:'Acapulco',           ing:'Oxfilé, lök, champinjoner, jalapeno, tacosås, färsk vitlök',           price:150 },
+    { id:38, cat:'pizza', name:'Husets Special',     ing:'Oxfilé, lök, tomater, champinjoner, bearnaisesås',                     price:150 },
+    { id:39, cat:'pizza', name:'Black & White',      ing:'Ost, oxfilé, bearnaisesås',                                            price:150 },
+    { id:40, cat:'pizza', name:'Falafel Pizza',      ing:'Falafel, ost, tomater, isbergssallad, rålök, pommes, gurka, kebabsås', price:150 },
+    { id:41, cat:'pizza', name:'Dubbel Calzone',     ing:'Skinka (dubbel botten)',                                               price:150 },
+    { id:42, cat:'pizza', name:'Båtpizza',           ing:'Kebabkött, lök, tomater, gurka, peperoni, kebabsås',                  price:150 },
+    { id:43, cat:'pizza', name:'Ostkantkebab',       ing:'Kebabkött, lök, tomat, kebabsås, peperoni',                           price:150 },
+    { id:44, cat:'pizza', name:'Ostkantskinka',      ing:'Skinka, köttfärs, bearnaisesås',                                       price:150 },
+    { id:45, cat:'pizza', name:'Sandhem',            ing:'Oxfilé, tomater, paprika, champinjoner, bearnaisesås',                 price:150 },
+    { id:46, cat:'pizza', name:'Dubbel Ciao Ciao',   ing:'Fläskfilé, champinjoner, lök, vitlök',                                price:150 },
+    { id:47, cat:'pizza', name:'Lionella Special',   ing:'Oxfilé, fläskfilé, kyckling, bacon, bearnaisesås',                    price:150 },
+    { id:48, cat:'pizza', name:'Idas Veganska',      ing:'Veganost, champinjoner, lök, pommes',                                  price:150 },
+    { id:49, cat:'pizza', name:'San Fransisco',      ing:'Skinka, köttfärs, salami, bearnaisesås',                              price:160 },
+    { id:50, cat:'pizza', name:'Las Vegas',          ing:'Mozzarella, oxfilé, bacon, paprika, bearnaisesås',                    price:160 },
+    { id:51, cat:'pizza', name:'Melton Special',     ing:'Salami, skinka, kebabkött, kebabsås, bacon',                          price:160 },
+    { id:52, cat:'pizza', name:'Ferbo Special',      ing:'Ananas, banan, lök, jordnötter, champinjoner, kebabkött, kebabsås',   price:160 },
+    { id:53, cat:'pizza', name:'Favorit Special',    ing:'Skapa din egen pizza med valfria pålägg',                              price:160 },
 
     // ── RULLAR ──────────────────────────────────────────────────────────
     { id:52, cat:'rulle', name:'Blandrulle',    ing:'Ost, kebabkött, rå lök, pommes, sås (Nöt/Fläsk/Kyckling)', price:150 },
@@ -1295,7 +1289,7 @@ const menuItems = [
     { id:65, cat:'sallad', name:'Falafelsallad',    ing:'Ost, falafel, isbergssallad, tomater, gurka, ananas, peperoni, lök',                    price:135 },
     { id:66, cat:'sallad', name:'Kycklingssallad',  ing:'Kyckling, isbergssallad, lök, tomater, gurka, paprika, kebabsås, sparris',              price:135 },
     { id:67, cat:'sallad', name:'Kebabsallad',      ing:'Kebabkött, isbergssallad, lök, tomater, gurka, ananas, ost, kebabsås',                  price:135 },
-    { id:71, cat:'sallad', name:'Räksallad',        ing:'Räkor, isbergssallad, tomater, gurka, ägg, citron',                                     price:145 },
+    { id:71, cat:'sallad', name:'Räksallad',        ing:'Räkor, isbergssallad, tomater, gurka, ägg, citron',                                     price:135 },
 
     // ── À LA CARTE ──────────────────────────────────────────────────────
     { id:68, cat:'alacarte', name:'Fläsk Noisette',     ing:'Färska grönsaker, pommes, bearnaisesås',                    price:160 },
@@ -1303,48 +1297,97 @@ const menuItems = [
     { id:70, cat:'alacarte', name:'Hemlagad Schnitzel',  ing:'Pommes, sallad, tomater, gurka, bearnaisesås, lök',         price:160 },
 ];
 
-const imgPools = {
-    pizza:    pizzaImgs,
-    rulle:    wrapImgs,
-    sallad:   saladImgs,
-    tallrik:  plateImgs,
-    alacarte: plateImgs,
+// Filename on disk for each dish, by exact name. Folder is picked from item.cat.
+const IMG_FILES = {
+    // PIZZOR
+    'Margarita':           '1 Margarita.png',
+    'Funghi':              '2 Funghi.png',
+    'Vesuvio':             '3 Vesuvio.png',
+    'Capricciosa':         '4 Capricciosa.png',
+    'Hawaii':              '5 Hawaii.png',
+    'Africana':            '6 Africana.png',
+    'Calzone':             '7 Calzone.png',
+    'Capri':               '8 Capri.png',
+    'Pescatore':           '9 Pescatore.png',
+    'Roma':                '10 Roma.png',
+    'Jamaica':             '11 Jamaica.png',
+    'Salami Pizza':        '12 Salami Pizza.png',
+    'Kebabpizza':          '13 Kebabpizza.png',
+    'Kycklingpizza':       '14 Kycklingpizza.png',
+    'Batman':              '15 Batman.png',
+    'Mexicana':            '16 Mexicana.png',
+    'Italiano':            '17 Italiano.png',
+    'Mamma Mia':           '18 Mamma Mia.png',
+    'Lina':                '19 Lina.png',
+    'Quattro Stagioni':    '20 Quattro Stagioni.png',
+    'Vegetarisk Pizza':    '21 Vegetarisk Pizza.png',
+    'Spenatpizza':         '22 Spenatpizza.png',
+    'Fem Ostar':           '23 Fem Ostar.png',
+    'Ciao Ciao':           '24 Ciao Ciao.png',
+    'Kyckling A La King':  '25 Kyckling A La King.png',
+    'Tommy':               '26Tommy.png',
+    'Emelie Special':      '27 Emelie Special.png',
+    'Daniel Special':      '28 Daniel Special.png',
+    'Hot Pepper':          '29 Hot Pepper.png',
+    'Kärlekspizza':        '30 Kärlekspizza.png',
+    'Chefs Pizza':         '31 Chefs Pizza.png',
+    'My Love':             '32 My Love.png',
+    'Maria Special':       '33 Maria Special.png',
+    'Sandhem Special':     '34 Sandhem Special.png',
+    'Gorgonzola Pizza':    '35 Gorgonzola Pizza.png',
+    'Acapulco':            '36 Acapulco.png',
+    'Husets Special':      '37 Husets Special.png',
+    'Black & White':       '38 Black & White.png',
+    'Falafel Pizza':       '39 Falafel Pizza.png',
+    'Dubbel Calzone':      '40 Dubbel Calzone.png',
+    'Båtpizza':            '41 Båtpizza.png',
+    'Ostkantkebab':        '42 Ostkantkebab.png',
+    'Ostkantskinka':       '43 Ostkantskinka.png',
+    'Sandhem':             '44 Sandhem.png',
+    'Dubbel Ciao Ciao':    '45 Dubbel Ciao Ciao.png',
+    'Lionella Special':    '46 Lionella Special.png',
+    'Idas Veganska':       '47 Idas Veganska.png',
+    'San Fransisco':       '48 San Fransisco.png',
+    'Las Vegas':           '49 Las Vegas.png',
+    'Melton Special':      '50 Melton Special.png',
+    'Ferbo Special':       '51 Ferbo Special.png',
+    'Disco':               '52 Disco.png',
+    'Favorit Special':     '53 Favorit Special.png',
+    // RULLAR
+    'Blandrulle':          'Blandrulle.png',
+    'Falafelrulle':        'Falafelrulle.png',
+    'Kycklingrulle':       'Kycklingrulle.png',
+    'Kebabrulle':          'Kebabrulle.png',
+    // TALLRIK
+    'Chicken Nuggets':     'Chicken Nuggets.png',
+    'Falafeltallrik':      'Falafeltallrik.png',
+    'Kycklingtallrik':     'Kycklingtallrik.png',
+    'Kebabtallrik':        'Kebabtallrik.png',
+    'Pommestallrik':       'Pommestallrik.png',
+    'Hamburgertallrik':    'Hamburgertallrik.png',
+    // SALLADER
+    'Tonfisksallad':       'Tonfisksallad.png',
+    'Grekisk Sallad':      'Grekisk Sallad.png',
+    'Skinksallad':         'Skinksallad.png',
+    'Falafelsallad':       'Falafelsallad.png',
+    'Kycklingssallad':     'Kycklingssallad.png',
+    'Kebabsallad':         'Kebabsallad.png',
+    'Räksallad':           'Räksallad.png',
+    // À LA CARTE
+    'Fläsk Noisette':      'Fläsk Noisette.png',
+    'Lövbit':              'Lövbit.png',
+    'Hemlagad Schnitzel':  'Hemlagad shnitsel.png',
 };
 
-// Local image overrides — keyed by item name
-const localImgs = {
-    // Tallrik
-    'Chicken Nuggets':    'biler%20tallrik/Chicken%20Nuggets.png',
-    'Falafeltallrik':     'biler%20tallrik/Falafeltallrik.png',
-    'Kycklingtallrik':    'biler%20tallrik/Kycklingtallrik.png',
-    'Kebabtallrik':       'biler%20tallrik/Kebabtallrik.png',
-    'Hamburgertallrik':   'biler%20tallrik/Hamburgertallrik.png',
-    'Pommestallrik':      'biler%20tallrik/Pommestallrik.png',
-    // À la carte
-    'Fläsk Noisette':     'biler%20%C3%80%20la%20carte/Fl%C3%A4sk%20Noisette.png',
-    'Lövbit':             'biler%20%C3%80%20la%20carte/L%C3%B6vbit.png',
-    'Hemlagad Schnitzel': 'biler%20%C3%80%20la%20carte/Hemlagad%20Schnitzel.png',
-    // Rullar
-    'Blandrulle':         'biler%20Rullar/Blandrulle.png',
-    'Falafelrulle':       'biler%20Rullar/Falafelrulle.png',
-    'Kycklingrulle':      'biler%20Rullar/Kycklingrulle.png',
-    'Kebabrulle':         'biler%20Rullar/Kebabrulle.png',
-    // Sallader
-    'Räksallad':          'biler%20sallder/R%C3%A4ksallad.png',
-};
-
-// Pizza files follow the pattern "biler pizzor/{id} {name}.png".
-// The single exception is id 26 where the filename has no space ("26Tommy.png").
-function pizzaImgPath(item) {
-    const filename = item.id === 26 ? '26Tommy.png' : `${item.id} ${item.name}.png`;
-    return 'biler%20pizzor/' + encodeURIComponent(filename);
+function encodePath(folder, file) {
+    return folder.split('/').map(encodeURIComponent).join('/') + '/' + encodeURIComponent(file);
 }
 
 function imgFor(item, indexInCat) {
-    if (localImgs[item.name]) return localImgs[item.name];
-    if (item.cat === 'pizza')  return pizzaImgPath(item);
-    const pool = imgPools[item.cat] || pizzaImgs;
-    return pool[indexInCat % pool.length];
+    const folder = IMG_FOLDERS[item.cat];
+    const file   = IMG_FILES[item.name];
+    if (folder && file) return encodePath(folder, file);
+    return encodePath('biler tallrik', FALLBACK_FILES[item.id % FALLBACK_FILES.length]);
 }
 
 const PHONE = '0515760004';
